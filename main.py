@@ -9,7 +9,7 @@ from tic_tac_toe import ttt_game
 
 
 def main(root) -> None: # pylint: disable=W0621
-    """The start of the program automatically ran when this file is launched"""
+    """Main screen of the program shows buttons to select game"""
 
 
     N = tkinter.N

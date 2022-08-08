@@ -1,10 +1,11 @@
 # PythonGames
+
 A little collection of python games
 
-Run Games.py to start the program 
+Run Games.py to start the program
 
-Number guesser works like wordle with numbers it takes a string of six numbers green means its in the rightspot yellow means its in the wrong spot and red means its not in the number
+Number guesser works like Wordle with numbers it takes a string of six numbers green means its in the right spot yellow means its in the wrong spot and red means its not in the number
 
-all of the games currently just go back to the main screen when a win happens except rock paper scissors, which has a back button.
+all of the games currently just save the wins and losses to file and restart the game
 
-everything else should be fairly self explanitory 
+everything else should be fairly self explanatory
