@@ -6,6 +6,7 @@ from connect_four import connect_main
 from number_guesser import number_game
 from rock_paper_scissors import rps_launch
 from tic_tac_toe import ttt_game
+from wordle import wordle
 
 
 def main(root) -> None: # pylint: disable=W0621
@@ -39,6 +40,9 @@ def main(root) -> None: # pylint: disable=W0621
 
     number_guess_button = ttk.Button(mainframe, text="Number Guesser", command=lambda : number_game(mainframe))
     number_guess_button.grid(column=1,row=1)
+    
+    wordle_button = ttk.Button(mainframe, text="Wordle", command=lambda : wordle(mainframe))
+    wordle_button.grid(column=0,row=2)
 
     for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)

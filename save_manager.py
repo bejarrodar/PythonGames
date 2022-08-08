@@ -6,7 +6,7 @@ def write_results(save:dict,game:str,file:str = "save.csv"):
 
     Args:
         save (dict): keys = 'win','lose','tie' as int
-        game (str): 'rps','ttt','num','connect'
+        game (str): 'rps','ttt','num','connect','wdl'
         file (str): the name of the save file to be saved
     """
     old_data = read_results(file)
@@ -16,21 +16,31 @@ def write_results(save:dict,game:str,file:str = "save.csv"):
             write_out = [save["win"],save["lose"],save["tie"],
                          old_data[3],old_data[4],old_data[5],
                          old_data[6],old_data[7],old_data[8],
-                         old_data[9],old_data[10],old_data[11]]
+                         old_data[9],old_data[10],old_data[11],
+                         old_data[12],old_data[13],old_data[14]]
         case "ttt":
             write_out = [old_data[0],old_data[1],old_data[2],
                          save["win"],save["lose"],save["tie"],
                          old_data[6],old_data[7],old_data[8],
-                         old_data[9],old_data[10],old_data[11]]
+                         old_data[9],old_data[10],old_data[11],
+                         old_data[12],old_data[13],old_data[14]]
         case "num":
             write_out = [old_data[0],old_data[1],old_data[2],
                          old_data[3],old_data[4],old_data[5],
                          save["win"],save["lose"],save["tie"],
-                         old_data[9],old_data[10],old_data[11]]
+                         old_data[9],old_data[10],old_data[11],
+                         old_data[12],old_data[13],old_data[14]]
         case "connect":
             write_out = [old_data[0],old_data[1],old_data[2],
                          old_data[3],old_data[4],old_data[5],
                          old_data[6],old_data[7],old_data[8],
+                         save["win"],save["lose"],save["tie"],
+                         old_data[12],old_data[13],old_data[14]]
+        case "wdl":
+            write_out = [old_data[0],old_data[1],old_data[2],
+                         old_data[3],old_data[4],old_data[5],
+                         old_data[6],old_data[7],old_data[8],
+                         old_data[9],old_data[10],old_data[11],
                          save["win"],save["lose"],save["tie"]]
 
     print(write_out)
@@ -46,7 +56,8 @@ def read_results(file: str= "save.csv") -> list:
 
     Returns:
         list: [rps wins, rps lose,rps tie, ttt win, ttt lose, ttt tie,
-            num win, num lose, num tie, connect wins, connect lose, connect tie]'
+            num win, num lose, num tie, connect wins, connect lose, connect tie,
+            wdl win, wdl lose, wdl tie]'
     """
     save_list = []
     try:
@@ -57,4 +68,4 @@ def read_results(file: str= "save.csv") -> list:
             return save_list[0]
     except FileNotFoundError:
         print("File not found")
-        return [0,0,0,0,0,0,0,0,0,0,0,0]
+        return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
