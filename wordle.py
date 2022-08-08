@@ -38,7 +38,7 @@ def wordle(frame:tkinter.Frame):
     
     answer = random_word.pick_word()
 
-    def check_ans(*args):
+    def check_ans(*_):
         nonlocal attempt
         nonlocal wins
         nonlocal lose
