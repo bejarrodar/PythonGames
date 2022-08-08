@@ -25,7 +25,7 @@ def loop(root) -> None: # pylint: disable=W0621
     root.rowconfigure(0, weight=1)
     
     main.main(mainframe)
-    
+
 
 if __name__ == "__main__":
 

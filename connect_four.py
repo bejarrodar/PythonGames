@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import PhotoImage, ttk
 
+import save_manager
 from Games import loop
 
 
@@ -24,9 +25,14 @@ def connect_main(frame: tkinter.Frame):
     e_frame = ttk.Frame(frame)
     e_frame.grid(column=4,row=0)
 
-    clear_img = PhotoImage(file="assets/connect_1.gif")
-    player_1_img = PhotoImage(file="assets/connect_2.gif")
-    player_2_img = PhotoImage(file="assets/connect_3.gif")
+    clear_img = PhotoImage(file="connect_1.gif")
+    player_1_img = PhotoImage(file="connect_2.gif")
+    player_2_img = PhotoImage(file="connect_3.gif")
+    
+    def leave():
+        for child in frame.winfo_children():
+            child.destroy()
+        loop(frame)
     
     wins = [["a1","a2","a3","a4"],["b1","b2","b3","b4"],["c1","c2","c3","c4"],
             ["d1","d2","d3","d4"],["e1","e2","e3","e4"],["a1","b2","c3","d4"],
@@ -40,8 +46,23 @@ def connect_main(frame: tkinter.Frame):
             "a3":0, "b3":0, "c3":0, "d3":0, "e3":0,
             "a4":0, "b4":0, "c4":0, "d4":0, "e4":0,
             "current_player":1}
+    
+    save = save_manager.read_results()
+    win = int(save[9])
+    lose = int(save[10])
+    tie = int(save[11])
+    
+    def clear_board():
+        for x in grid2:
+            grid2[x].config(image = clear_img)
+            grid[x] = 0
+            grid2[x].pack()
+            grid["current_player"] = 1
 
     def check_win():
+        nonlocal win
+        nonlocal lose
+        nonlocal tie
         for x in wins:
             play1_iter = 0
             play2_iter = 0
@@ -52,37 +73,39 @@ def connect_main(frame: tkinter.Frame):
                     play2_iter += 1
             if play1_iter == 4:
                 print("player 1 wins")
-                for child in frame.winfo_children():
-                    child.destroy()
-                loop(frame)
+                win += 1
+                clear_board()
             elif play2_iter == 4:
                 print("player 2 wins")
-                for child in frame.winfo_children():
-                    child.destroy()
-                loop(frame)
+                lose += 1
+                clear_board()
+        count = 0
+        for z in grid2:
+            if grid[z] != 0:
+                count += 1
+        if count == 20:
+            print("Tie")
+            tie += 1
+            clear_board()
+        save_manager.write_results({"win":win,"lose":lose,"tie":tie},"connect")
 
     def make_move(column:str):
-
-        grid2 = {"a1":a1, "b1":b1, "c1":c1, "d1":d1, "e1":e1,
-                "a2":a2, "b2":b2, "c2":c2, "d2":d2, "e2":e2,
-                "a3":a3, "b3":b3, "c3":c3, "d3":d3, "e3":e3,
-                "a4":a4, "b4":b4, "c4":c4, "d4":d4, "e4":e4,}
         for i in range(4,0,-1):
             grid_id = column + str(i)
             if grid[grid_id] == 0:
                 if grid["current_player"] == 1:
                     grid[grid_id] = 1
-                    check_win()
                     grid2[grid_id].config(image = player_1_img)
                     grid2[grid_id].pack()
                     grid["current_player"] = 2
+                    check_win()
                     break
                 else:
                     grid[grid_id] = 2
-                    check_win()
                     grid2[grid_id].config(image = player_2_img)
                     grid2[grid_id].pack()
                     grid["current_player"] = 1
+                    check_win()
                     break
 
 
@@ -178,3 +201,8 @@ def connect_main(frame: tkinter.Frame):
     c_button.grid(column=2,row=4)
     d_button.grid(column=3,row=4)
     e_button.grid(column=4,row=4)
+    
+    grid2 = {"a1":a1, "b1":b1, "c1":c1, "d1":d1, "e1":e1,
+            "a2":a2, "b2":b2, "c2":c2, "d2":d2, "e2":e2,
+            "a3":a3, "b3":b3, "c3":c3, "d3":d3, "e3":e3,
+            "a4":a4, "b4":b4, "c4":c4, "d4":d4, "e4":e4,}

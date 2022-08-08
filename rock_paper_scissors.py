@@ -2,6 +2,7 @@ import random
 import tkinter
 from tkinter import ttk
 
+import save_manager
 from Games import loop
 
 
@@ -27,6 +28,7 @@ def rps_launch(frame: ttk.Frame):
                 results = "Win"
                 wins += 1
                 win_var.set(str(wins))
+        save_manager.write_results({"win":wins,"lose":loses,"tie":ties},"rps")
 
         ttk.Label(frame, text=results).grid(
             column=2, row=2, sticky=(E, W)
@@ -51,6 +53,7 @@ def rps_launch(frame: ttk.Frame):
                 results = "Lose"
                 loses += 1
                 lose_var.set(str(loses))
+        save_manager.write_results({"win":wins,"lose":loses,"tie":ties},"rps")
 
         ttk.Label(frame, text=results).grid(
             column=2, row=2, sticky=(E, W)
@@ -75,6 +78,7 @@ def rps_launch(frame: ttk.Frame):
                 results = "Tie"
                 ties += 1
                 tie_var.set(str(ties))
+        save_manager.write_results({"win":wins,"lose":loses,"tie":ties},"rps")
 
         ttk.Label(frame, text=results).grid(
             column=2, row=2, sticky=(E, W)
@@ -90,9 +94,13 @@ def rps_launch(frame: ttk.Frame):
 
     W = tkinter.W
     E = tkinter.E
-    wins = 0
-    loses = 0
-    ties = 0
+
+    save = save_manager.read_results()
+    print(save)
+    wins = save[0]
+    loses = save[1]
+    ties = save[2]
+    
     tie_var = tkinter.StringVar()
     tie_var.set(str(ties))
     win_var = tkinter.StringVar()
